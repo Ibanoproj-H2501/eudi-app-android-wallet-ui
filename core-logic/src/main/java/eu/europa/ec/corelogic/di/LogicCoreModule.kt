@@ -45,15 +45,32 @@ const val PRESENTATION_SCOPE_ID = "presentation_scope_id"
 @ComponentScan("eu.europa.ec.corelogic")
 class LogicCoreModule
 
+//@Single
+//fun provideEudiWallet(
+//    context: Context,
+//    walletCoreConfig: WalletCoreConfig,
+//    walletCoreLogController: WalletCoreLogController,
+//    walletCoreTransactionLogController: WalletCoreTransactionLogController
+//): EudiWallet = EudiWallet(context, walletCoreConfig.config) {
+//    withLogger(walletCoreLogController)
+//    withTransactionLogger(walletCoreTransactionLogController)
+//}
+
+
 @Single
 fun provideEudiWallet(
     context: Context,
     walletCoreConfig: WalletCoreConfig,
     walletCoreLogController: WalletCoreLogController,
-    walletCoreTransactionLogController: WalletCoreTransactionLogController
+//    walletCoreTransactionLogController: WalletCoreTransactionLogController
 ): EudiWallet = EudiWallet(context, walletCoreConfig.config) {
     withLogger(walletCoreLogController)
-    withTransactionLogger(walletCoreTransactionLogController)
+//    withTransactionLogger(walletCoreTransactionLogController)
+
+    // Custom HttpClient
+    withKtorHttpClientFactory {
+        ProvideKtorHttpClient.client()
+    }
 }
 
 @Single
