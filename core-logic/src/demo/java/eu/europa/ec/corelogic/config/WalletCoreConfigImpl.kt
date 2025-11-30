@@ -22,6 +22,7 @@ import eu.europa.ec.eudi.wallet.EudiWalletConfig
 import eu.europa.ec.eudi.wallet.issue.openid4vci.OpenId4VciManager
 import eu.europa.ec.eudi.wallet.transfer.openId4vp.ClientIdScheme
 import eu.europa.ec.eudi.wallet.transfer.openId4vp.Format
+import eu.europa.ec.eudi.wallet.transfer.openId4vp.PreregisteredVerifier
 import eu.europa.ec.resourceslogic.R
 
 internal class WalletCoreConfigImpl(
@@ -48,8 +49,18 @@ internal class WalletCoreConfigImpl(
                     configureOpenId4Vp {
                         withClientIdSchemes(
                             listOf(
-                                ClientIdScheme.X509SanDns,
-                                ClientIdScheme.X509Hash
+//                                ClientIdScheme.X509SanDns,
+//                                ClientIdScheme.X509Hash
+                                ClientIdScheme.Preregistered(
+                                    preregisteredVerifiers =
+                                        listOf(
+                                            PreregisteredVerifier(
+                                                clientId = "Verifier",
+                                                legalName = "Verifier",
+                                                verifierApi = "https://10.0.2.2"
+                                            )
+                                        )
+                                )
                             )
                         )
                         withSchemes(
